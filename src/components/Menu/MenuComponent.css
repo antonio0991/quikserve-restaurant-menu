@@ -24,6 +24,7 @@ a {
 }
 
 .search {
+  background-color: white;
   border-radius: 8px;
   border: 1px solid #8a94a4;
   display: flex;
@@ -37,4 +38,50 @@ input {
   height: 44px;
   width: 95%;
   border: none;
+}
+
+.main-body {
+  display: flex;
+  flex-direction: column;
+  background-color: #eeeeee;
+  padding-right: 208px;
+  padding-left: 208px;
+  height: 500px;
+}
+
+.menu-wrapper {
+  background-color: #f8f9fa;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.menu {
+  width: 50%;
+  background-color: white;
+  color: #121212;
+  padding-top: 20px;
+}
+
+.section-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.section-image-container {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  border: 2px solid #4f372f;
+}
+
+.section-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 104px;
+  height: 146px;
+  margin-left: 10px;
 }
