@@ -1,0 +1,24 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.link-wrapper {
+  width: 232px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-open {
+  box-shadow: inset 0 -5px 0 white;
+}
