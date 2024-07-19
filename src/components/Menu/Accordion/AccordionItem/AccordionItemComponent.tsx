@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-import { Item } from '../../../models/IMenu';
-import { addToCart } from '../../../slices/cart.slice';
-import { formatCurrency } from '../../../utils/formatUtil';
+import { Item } from '../../../../models/IMenu';
+import { addToCart } from '../../../../slices/cart.slice';
+import { formatCurrency } from '../../../../utils/formatUtil';
 interface AccordionItemProps {
   title: string;
   items: Item[];
@@ -20,13 +20,22 @@ const AccordionItem: React.FC<AccordionItemProps> = (
 
   const addToCartHandler = (item: Item) => dispatch(addToCart(item));
 
+  const getSectionHeight = (items: Item[]): number => {
+    let totalHeight = 0;
+    items.forEach((item) => {
+      if (item.images) totalHeight += 117;
+      else totalHeight += 75;
+    });
+    return totalHeight;
+  };
+
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.style.height = props.isOpen
-        ? `${contentRef.current.scrollHeight}px`
+        ? `${getSectionHeight(props.items)}px`
         : '0px';
     }
-  }, [props.isOpen]);
+  }, [props.isOpen, props.items]);
 
   const handleClick = useCallback(() => {
     props.onClick();
@@ -45,31 +54,22 @@ const AccordionItem: React.FC<AccordionItemProps> = (
       </button>
       <div ref={contentRef} className="answer-container">
         {props.items.map((item) => (
-          <div>
-            {item.visible ? (
-              <div className="item">
-                <div className="item-text">
-                  <button onClick={() => addToCartHandler(item)}>
-                    Add to cart
-                  </button>
-                  <p className="item-name">{item.name}</p>
-                  {item.description ? (
-                    <span className="item-description">{item.description}</span>
-                  ) : (
-                    <></>
-                  )}
+          <div className="item">
+            <div className="item-text">
+              <p className="item-name">{item.name}</p>
+              {item.description ? (
+                <span className="item-description">{item.description}</span>
+              ) : (
+                <></>
+              )}
 
-                  <p className="item-price">
-                    R$
-                    {formatCurrency(item.price)}
-                  </p>
-                </div>
-                {item.images ? (
-                  <img src={item.images[0].image} className="item-image"></img>
-                ) : (
-                  <></>
-                )}
-              </div>
+              <p className="item-price">
+                R$
+                {formatCurrency(item.price)}
+              </p>
+            </div>
+            {item.images ? (
+              <img src={item.images[0].image} className="item-image"></img>
             ) : (
               <></>
             )}

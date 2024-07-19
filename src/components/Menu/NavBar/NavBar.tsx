@@ -1,5 +1,7 @@
 import React from 'react';
 import { IVenue } from '../../../models/IVenue';
+import './NavBar.css';
+
 interface NavBarProps {
   venue: IVenue | null;
 }
