@@ -1,8 +1,7 @@
 // src/features/menu/menuSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { VenueService } from '../api/api';
 import { IMenu } from '../models/IMenu';
-import { MENU_DETAILS } from '../utils/urlUtil';
 
 interface MenuState {
   menu: IMenu | null;
@@ -17,8 +16,8 @@ const initialState: MenuState = {
 };
 
 export const fetchMenu = createAsyncThunk('menu/fetchMenu', async () => {
-  const response = await axios.get<IMenu>(MENU_DETAILS);
-  return response.data;
+  const response = await VenueService.getMenu();
+  return response;
 });
 
 const menuSlice = createSlice({

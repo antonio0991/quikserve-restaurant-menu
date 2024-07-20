@@ -5,7 +5,10 @@ import { Section } from '../../models/IMenu';
 import { AppDispatch, RootState } from '../../redux/store';
 import { fetchMenu } from '../../slices/menu.slice';
 import { fetchVenue } from '../../slices/venue.slice';
+import { ErrorComponent } from '../Loading/Error';
+import { LoadingComponent } from '../Loading/Loading';
 import AccordionComponent from './Accordion/AccordionComponent';
+import Cart from './Cart/Cart';
 import './Menu.css';
 import MenuHeader from './MenuHeader/MenuHeader';
 import NavBar from './NavBar/NavBar';
@@ -32,6 +35,32 @@ const MenuComponent: React.FC<MenuComponentProps> = ({}) => {
     }
   }, [filter, menuState.menu]);
 
+  const filterSections = (sections: Section[], filter: string): Section[] => {
+    if (!sections) return [];
+
+    const visibleSections = sections.filter((section) => section.visible);
+
+    const filteredSections = visibleSections
+      .map((section) => {
+        const filteredItems = section.items.map((item) => ({
+          ...item,
+          visible: item.name.toLowerCase().includes(filter.toLowerCase())
+            ? 1
+            : null,
+        }));
+        const hasVisibleItems = filteredItems.some((item) => item.visible);
+
+        return {
+          ...section,
+          items: filteredItems,
+          visible: hasVisibleItems ? 1 : null,
+        };
+      })
+      .filter((section) => section.visible) as Section[];
+
+    return filteredSections;
+  };
+
   if (venueState.status === 'loading' || menuState.status === 'loading') {
     return <LoadingComponent />;
   }
@@ -52,44 +81,12 @@ const MenuComponent: React.FC<MenuComponentProps> = ({}) => {
             <div className="sections">
               {sections && <AccordionComponent sections={sections} />}
             </div>
-            <div className="cart"></div>
           </div>
+          <Cart></Cart>
         </div>
       </div>
     </div>
   );
 };
-
-const filterSections = (sections: Section[], filter: string): Section[] => {
-  if (!sections) return [];
-
-  const visibleSections = sections.filter((section) => section.visible);
-
-  const filteredSections = visibleSections
-    .map((section) => {
-      const filteredItems = section.items.map((item) => ({
-        ...item,
-        visible: item.name.toLowerCase().includes(filter.toLowerCase())
-          ? 1
-          : null,
-      }));
-      const hasVisibleItems = filteredItems.some((item) => item.visible);
-
-      return {
-        ...section,
-        items: filteredItems,
-        visible: hasVisibleItems ? 1 : null,
-      };
-    })
-    .filter((section) => section.visible) as Section[];
-
-  return filteredSections;
-};
-
-const LoadingComponent: React.FC = () => <div>Loading...</div>;
-
-const ErrorComponent: React.FC<{ error: string | null }> = ({ error }) => (
-  <div>Failed loading: {error}</div>
-);
 
 export default MenuComponent;

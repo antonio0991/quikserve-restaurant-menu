@@ -1,8 +1,7 @@
 // src/features/venue/venueSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { VenueService } from '../api/api';
 import { IVenue } from '../models/IVenue';
-import { VENUE_DETAILS } from '../utils/urlUtil';
 
 interface VenueState {
   venue: IVenue | null;
@@ -17,8 +16,8 @@ const initialState: VenueState = {
 };
 
 export const fetchVenue = createAsyncThunk('venue/fetchVenue', async () => {
-  const response = await axios.get<IVenue>(VENUE_DETAILS);
-  return response.data;
+  const response = await VenueService.getVenue();
+  return response;
 });
 
 const venueSlice = createSlice({

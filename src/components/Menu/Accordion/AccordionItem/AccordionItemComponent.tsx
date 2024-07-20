@@ -56,6 +56,9 @@ const AccordionItem: React.FC<AccordionItemProps> = (
         {props.items.map((item) => (
           <div className="item">
             <div className="item-text">
+              {/* <button onClick={() => addToCartHandler(item)}>
+                add to cart
+              </button> */}
               <p className="item-name">{item.name}</p>
               {item.description ? (
                 <span className="item-description">{item.description}</span>

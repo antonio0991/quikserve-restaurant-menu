@@ -15,6 +15,6 @@ const requests = {
 };
 
 export const VenueService = {
-  getVenue: (): Promise<IVenue> => requests.get(VENUE_DETAILS),
-  getMenu: (): Promise<IMenu> => requests.get(MENU_DETAILS),
+  getVenue: async (): Promise<IVenue> => requests.get(VENUE_DETAILS),
+  getMenu: async (): Promise<IMenu> => requests.get(MENU_DETAILS),
 };
