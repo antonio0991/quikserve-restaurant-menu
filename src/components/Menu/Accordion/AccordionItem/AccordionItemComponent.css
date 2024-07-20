@@ -1,0 +1,83 @@
+.wrapper {
+  overflow: hidden;
+}
+
+.wrapper .question-container {
+  width: 100%;
+  text-align: left;
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Roboto';
+}
+
+.wrapper .arrow {
+  font-size: 2rem;
+  transition: 0.3s ease-in-out;
+}
+
+.arrow.active {
+  rotate: 180deg;
+}
+
+.wrapper .answer-container {
+  padding: 0 1rem;
+  transition: height 0.4s ease-in-out;
+}
+
+.wrapper .answer-content {
+  padding: 1rem 0;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #c2c2c2;
+}
+
+.item-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  font-size: 16px;
+}
+
+.item-name {
+  font-weight: 500;
+  color: #121212;
+}
+
+.item-price {
+  font-weight: 500;
+  color: #464646;
+}
+
+.item-text span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 320px;
+  font-weight: 300;
+  color: #464646;
+}
+
+.item-image {
+  width: 128px;
+  height: 85px;
+}

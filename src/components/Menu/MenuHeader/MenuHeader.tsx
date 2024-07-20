@@ -2,6 +2,8 @@ import React from 'react';
 import Carousel from 'react-multi-carousel';
 import { Section } from '../../../models/IMenu';
 import { RESPONSIVE } from '../../../utils/consts';
+import './MenuHeader.css';
+
 interface MenuHeaderProps {
   sections: Section[] | undefined;
 }

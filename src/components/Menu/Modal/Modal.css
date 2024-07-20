@@ -1,0 +1,54 @@
+.modal-overlay {
+  z-index: 9999;
+  width: 100%;
+  height: 150%;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  display: block;
+  background: white;
+  width: 480px;
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
+.modal-top {
+  position: relative;
+  height: 320px;
+}
+
+.item-details {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-box .item-name {
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.13px;
+  text-align: left;
+}
+
+.modal-box .item-description {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.75px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}

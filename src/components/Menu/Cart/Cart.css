@@ -79,3 +79,19 @@ h3 {
   letter-spacing: 0.5px;
   text-align: right;
 }
+
+.cart-empty {
+  height: 64px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 24px;
+}
+
+h6 {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.75px;
+  text-align: left;
+}

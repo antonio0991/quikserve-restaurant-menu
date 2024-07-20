@@ -70,7 +70,9 @@ const Cart: React.FC<CartProps> = ({}) => {
             </>
           </div>
         ) : (
-          <h6>Seu carrinho esta vazio</h6>
+          <div className="cart-empty">
+            <h6>Seu carrinho está vazio</h6>
+          </div>
         )}
       </div>
     </div>

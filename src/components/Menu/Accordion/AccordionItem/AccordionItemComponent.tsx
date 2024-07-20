@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
+import useModal from '../../../../hooks/useModal';
 import { Item } from '../../../../models/IMenu';
-import { addToCart } from '../../../../slices/cart.slice';
 import { formatCurrency } from '../../../../utils/formatUtil';
+import Modal from '../../Modal/Modal';
+import './AccordionItemComponent.css';
+
 interface AccordionItemProps {
   title: string;
   items: Item[];
@@ -14,11 +17,11 @@ interface AccordionItemProps {
 const AccordionItem: React.FC<AccordionItemProps> = (
   props: AccordionItemProps
 ) => {
+  const { isOpen, toggle } = useModal();
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-
-  const addToCartHandler = (item: Item) => dispatch(addToCart(item));
 
   const getSectionHeight = (items: Item[]): number => {
     let totalHeight = 0;
@@ -41,6 +44,10 @@ const AccordionItem: React.FC<AccordionItemProps> = (
     props.onClick();
   }, [props.onClick]);
 
+  const handleOpenModal = (item: Item): void => {
+    setSelectedItem(item);
+    toggle();
+  };
   return (
     <div className="wrapper">
       <button
@@ -54,11 +61,8 @@ const AccordionItem: React.FC<AccordionItemProps> = (
       </button>
       <div ref={contentRef} className="answer-container">
         {props.items.map((item) => (
-          <div className="item">
+          <div onClick={() => handleOpenModal(item)} className="item">
             <div className="item-text">
-              {/* <button onClick={() => addToCartHandler(item)}>
-                add to cart
-              </button> */}
               <p className="item-name">{item.name}</p>
               {item.description ? (
                 <span className="item-description">{item.description}</span>
@@ -71,6 +75,7 @@ const AccordionItem: React.FC<AccordionItemProps> = (
                 {formatCurrency(item.price)}
               </p>
             </div>
+
             {item.images ? (
               <img src={item.images[0].image} className="item-image"></img>
             ) : (
@@ -79,6 +84,7 @@ const AccordionItem: React.FC<AccordionItemProps> = (
           </div>
         ))}
       </div>
+      <Modal isOpen={isOpen} toggle={toggle} item={selectedItem}></Modal>
     </div>
   );
 };
