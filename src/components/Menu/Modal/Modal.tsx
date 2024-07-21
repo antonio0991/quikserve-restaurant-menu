@@ -1,8 +1,12 @@
 // Modal.tsx
 
 import { IoMdCloseCircle } from 'react-icons/io';
-import { Item } from '../../../models/IMenu';
+import { Item, Modifier } from '../../../models/IMenu';
 import './Modal.css';
+import { Button, ToggleButton } from 'react-bootstrap';
+import { formatCurrency } from '../../../utils/formatUtil';
+import { addToCart } from '../../../slices/cart.slice';
+import { useDispatch } from 'react-redux';
 interface ModalProps {
   item: Item | null;
   isOpen: boolean;
@@ -10,6 +14,49 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ item, isOpen, toggle }) => {
+
+  let quantity = 0
+
+  const dispatch = useDispatch();
+
+  const addToCartHandler = (item: any) => { 
+    if (item){
+      dispatch(addToCart(item));
+      toggle();
+    }
+  };
+
+  function addItem(){
+    quantity++;
+    console.log(item)
+
+    updateValue();
+  }
+
+  function removeItem(){
+    quantity--;
+    updateValue();
+  }
+
+  function updateValue(){
+    const formText = document.getElementById("quantity-value");
+    if (formText){
+      formText.textContent = quantity.toString();
+    }
+  }
+
+  function getModifierText(modifier: Modifier){
+    return modifier.maxChoices == modifier.minChoices ? 
+      "Select " + modifier.maxChoices + " option" :
+      "Select " + modifier.minChoices + " or " + modifier.maxChoices + " option"
+  }
+
+  function getListModifiers(){
+    const mod = item?.modifiers ? item.modifiers : []
+    mod.forEach((mods) => console.log(mods))
+    return mod;
+  }
+
   return (
     <>
       {isOpen && (
@@ -41,24 +88,44 @@ const Modal: React.FC<ModalProps> = ({ item, isOpen, toggle }) => {
                 <span className="item-description">{item?.description}</span>
               </div>
               <div className="modifiers">
-                <>
-                  {item?.modifiers ? (
-                    item.modifiers.map((modifier) => {
+                <> 
+                  {(getListModifiers().forEach((modifier) => {
                       <div className="modifier">
-                        <>
+                        <div>
                           <h5>{modifier.name}</h5>
-                          {modifier.items.map((modifierItem) => {
-                            <div className="modifier-item">
-                              <span>{modifierItem.name}</span>
-                            </div>;
-                          })}
+                          <span>{getModifierText(modifier)}</span>
+                        </div>
+                        <>
+                          { modifier.items.forEach((item) => {
+                              <div style={{display: 'flex'}}> 
+                                <div>
+                                  <h5>{item.name}</h5>
+                                  <span>{formatCurrency(item.price)}</span>
+                                </div>
+                                <div>
+                                  <ToggleButton value={item.id} id={item.name}></ToggleButton>
+                                </div>
+                              </div>
+                          }) }
                         </>
                       </div>;
                     })
-                  ) : (
-                    <></>
                   )}
                 </>
+              </div>
+              <div>
+                <div className='itens'>
+                  <Button className='btn-minus' onClick={() => removeItem()}>
+                    <span>-</span>
+                  </Button>
+                    <h4 id="quantity-value" style={{alignContent: "center"}}>{quantity}</h4>
+                  <Button className='btn-plus' onClick={() => addItem()}>
+                    <span>+</span>  
+                  </Button>
+                </div>
+                <div className='order'>
+                  <Button className='btn-order' onClick={() => addToCartHandler(item)}>Add to Order - {formatCurrency(item ? item?.price : 0)}</Button>
+                </div>
               </div>
             </div>
           </div>

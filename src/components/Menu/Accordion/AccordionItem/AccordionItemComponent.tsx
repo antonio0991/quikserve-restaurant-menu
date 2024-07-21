@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
 import useModal from '../../../../hooks/useModal';
 import { Item } from '../../../../models/IMenu';
 import { formatCurrency } from '../../../../utils/formatUtil';
 import Modal from '../../Modal/Modal';
 import './AccordionItemComponent.css';
-
 interface AccordionItemProps {
   title: string;
   items: Item[];
@@ -20,8 +18,6 @@ const AccordionItem: React.FC<AccordionItemProps> = (
   const { isOpen, toggle } = useModal();
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const dispatch = useDispatch();
 
   const getSectionHeight = (items: Item[]): number => {
     let totalHeight = 0;
@@ -70,10 +66,7 @@ const AccordionItem: React.FC<AccordionItemProps> = (
                 <></>
               )}
 
-              <p className="item-price">
-                R$
-                {formatCurrency(item.price)}
-              </p>
+              <p className="item-price">{formatCurrency(item.price)}</p>
             </div>
 
             {item.images ? (

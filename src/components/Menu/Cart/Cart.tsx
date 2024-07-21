@@ -13,7 +13,7 @@ import { formatCurrency } from '../../../utils/formatUtil';
 import './Cart.css';
 interface CartProps {}
 
-const Cart: React.FC<CartProps> = ({}) => {
+const Cart: React.FC<CartProps> = () => {
   const items = useSelector(getCartItems);
   const totalPrice = useSelector(getTotalPrice);
   const venueState = useSelector((state: RootState) => state.venue);
@@ -37,7 +37,7 @@ const Cart: React.FC<CartProps> = ({}) => {
                   <div className="item">
                     <span className="item-name">{item.name}</span>
                     <span className="item-price">
-                      R${formatCurrency(item.price)}
+                      {formatCurrency(item.price)}
                     </span>
                   </div>
                   <div className="buttons">
@@ -64,7 +64,7 @@ const Cart: React.FC<CartProps> = ({}) => {
               <div className="total">
                 <span className="total-text">Total:</span>
                 <span className="total-price">
-                  R${formatCurrency(totalPrice)}
+                  {formatCurrency(totalPrice)}
                 </span>
               </div>
             </>

@@ -1,0 +1,87 @@
+.allergy-text {
+  margin: 3%;
+  width: 70%;
+  background-color: white;
+  text-decoration: underline;
+  justify-content: center;
+}
+
+.btn-basket{
+  height: 6vw;
+  color: white;
+  font-size: 1.1rem;
+  margin: 4vw;
+  background-color: #4f372f;
+  border-radius: 30px;
+  cursor:pointer;
+  width: 90%;
+}
+
+.basket{
+  margin-bottom: 3vw;
+}
+
+.cart-title{
+  justify-content: center;
+}
+
+.cart-body {
+  margin-top: 1vw;
+}
+
+.item-name {
+  font-weight: normal !important;
+}
+
+.item-price {
+  line-height: 28.75px;
+}
+
+.total-text {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.total-price {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.button-modal {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.btn-checkout {
+  width: 90%;
+  height: 6vw;
+  color: white;
+  font-size: 1.1rem;
+  margin: 4vw;
+  background-color: #4f372f;
+  border-radius: 30px;
+  cursor:pointer;
+  bottom: 0px;
+  position: fixed;
+}
+
+.checkout{
+  height: 2.5vw;
+}
+
+@media only screen and (max-width: 600px){
+  .btn-checkout {
+    height: 8vw;
+  }
+}
+
+@media only screen and (max-width: 400px){
+  .btn-checkout {
+    height: 10vw;
+  }
+
+  .btn-basket{
+    height: 10vw;
+  }
+
+}

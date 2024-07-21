@@ -23,7 +23,7 @@ export const fetchVenue = createAsyncThunk('venue/fetchVenue', async () => {
 const venueSlice = createSlice({
   name: 'venue',
   initialState,
-  //TODO: Format currency
+  //TODO: Format currency -> Return currency symbol + value
   reducers: {},
   extraReducers: (builder) => {
     builder

@@ -56,6 +56,7 @@
   justify-content: center;
   gap: 5px;
   font-size: 16px;
+  width: 75%;
 }
 
 .item-name {
@@ -80,4 +81,20 @@
 .item-image {
   width: 128px;
   height: 85px;
+}
+
+@media only screen and (max-width: 520px) {
+  .item-image {
+    width: 30%;
+    height: 30%;
+  }
+
+  .item-text span {
+    max-width: 90%;
+  }
+
+  .item {
+    justify-content: baseline;
+    gap: 0;
+  }
 }

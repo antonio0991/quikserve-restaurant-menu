@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import 'react-multi-carousel/lib/styles.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { Section } from '../../models/IMenu';
+import { Item, Section } from '../../models/IMenu';
 import { AppDispatch, RootState } from '../../redux/store';
 import { fetchMenu } from '../../slices/menu.slice';
 import { fetchVenue } from '../../slices/venue.slice';
@@ -13,6 +12,7 @@ import './Menu.css';
 import MenuHeader from './MenuHeader/MenuHeader';
 import NavBar from './NavBar/NavBar';
 import SearchBar from './SearchBar/SearchBar';
+import Basket from './Basket/Basket';
 
 interface MenuComponentProps {}
 
@@ -70,20 +70,26 @@ const MenuComponent: React.FC<MenuComponentProps> = ({}) => {
   }
 
   return (
-    <div>
+    <div style={{width: '100%'}}>
       <NavBar venue={venueState.venue} />
-      <img src={venueState.venue?.webSettings.bannerImage} alt="Banner" />
+      <img src={venueState.venue?.webSettings.bannerImage} alt="Banner"  style={{width: '100%'}}/>
       <div className="main-body">
         <SearchBar filter={filter} setFilter={setFilter} />
         <div className="menu-wrapper">
           <div className="menu">
-            <MenuHeader sections={menuState.menu?.sections} />
+            <MenuHeader sections={menuState.menu?.sections} setSection={setSections}/>
             <div className="sections">
-              {sections && <AccordionComponent sections={sections} />}
+              {sections && <AccordionComponent sections={sections}/>}
             </div>
           </div>
-          <Cart></Cart>
+          <div className="cartCard">
+            <Cart></Cart>
+          </div>
+          <div className='footer-mobile'>
+            <Basket></Basket>
+          </div>
         </div>
+
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Section } from '../../../models/IMenu';
+import { Item, Section } from '../../../models/IMenu';
 import './AccordionComponent.css';
 import AccordionItem from './AccordionItem/AccordionItemComponent';
 
