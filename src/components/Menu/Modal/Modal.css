@@ -17,6 +17,17 @@
   width: 480px;
 }
 
+.modal-close-icon {
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.12);
+  color: white;
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
 .modal-image {
   width: 100%;
   height: 100%;
@@ -53,10 +64,21 @@
   text-align: left;
 }
 
-.itens {
+.amount-value {
+  font-family: SF Pro Display;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28.64px;
+  text-align: center;
+  color: #121212;
+}
+
+.items {
   display: flex;
   height: fit-content;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn-plus {
@@ -68,7 +90,7 @@
   font-size: 2rem;
   border: 0;
   margin-left: 2vw;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .btn-minus {
@@ -80,30 +102,44 @@
   font-size: 2rem;
   border: 0;
   margin-right: 2vw;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .btn-order {
   width: 90%;
   height: 80%;
   color: white;
-  font-size: 1.1rem;
   margin: 1vw;
   background-color: #4f372f;
   border-radius: 30px;
-  cursor:pointer;
+  cursor: pointer;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 21.09px;
+  letter-spacing: 0.75px;
+  text-align: center;
 }
 
-.order{
-  height: 2.5vw;
+.order {
+  height: 48px;
+}
+
+.modifiers {
+  display: flex;
+  flex-direction: column;
 }
 
 .modifier {
   height: fit-content;
 }
 
-@media only screen and (max-width: 1080px) {
+.modifier-item {
+  display: flex;
+  justify-content: space-between;
+}
 
+@media only screen and (max-width: 1080px) {
   .btn-minus {
     height: 3vw;
     width: 3vw;
@@ -115,17 +151,26 @@
     margin: 2vw;
   }
 
-  .btn-plus{
+  .btn-plus {
     height: 3vw;
     width: 3vw;
   }
 }
 
 @media only screen and (max-width: 800px) {
-
   .btn-minus {
     height: 4vw;
     width: 4vw;
+  }
+  .modal-top {
+    position: relative;
+    height: unset;
+  }
+
+  .modal-image {
+    width: 100vw;
+    object-fit: cover;
+    display: block;
   }
 
   .btn-order {
@@ -134,19 +179,18 @@
     margin: 3vw;
   }
 
-  .btn-plus{
+  .btn-plus {
     height: 4vw;
     width: 4vw;
   }
 
-  .modal-box{
+  .modal-box {
     width: 100%;
     height: 100%;
   }
 }
 
 @media only screen and (max-width: 480px) {
-
   .btn-minus {
     height: 6vw;
     width: 6vw;
@@ -158,12 +202,12 @@
     margin: 4vw;
   }
 
-  .btn-plus{
+  .btn-plus {
     height: 6vw;
     width: 6vw;
   }
 
-  .modal-box{
+  .modal-box {
     width: 100%;
     height: 100%;
   }
