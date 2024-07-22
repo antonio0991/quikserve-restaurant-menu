@@ -10,14 +10,28 @@ const cartSlice = createSlice({
   name: 'cartItems',
   initialState: [] as CartItem[],
   reducers: {
-    addToCart: (state, action: PayloadAction<Item>) => {
+    addToCart: (state, action: PayloadAction<CartItem | Item>) => {
+      console.log(action.payload);
       const itemIndex = state.findIndex(
         (item) => item.id === action.payload.id
       );
+
       if (itemIndex !== -1) {
-        state[itemIndex].amount++;
+        if ((<CartItem>action.payload).amount) {
+          state[itemIndex].amount = (<CartItem>action.payload).amount;
+          if (state[itemIndex].modifiers) {
+            state[itemIndex].modifiers = action.payload.modifiers;
+          }
+        } else {
+          state[itemIndex].amount += 1;
+        }
+
+        state[itemIndex].price = action.payload.price;
       } else {
-        state.push({ ...action.payload, amount: 1 });
+        state.push({
+          ...action.payload,
+          amount: (<CartItem>action.payload).amount ?? 1,
+        });
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {

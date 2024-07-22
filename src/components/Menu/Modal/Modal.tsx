@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+//modal.tsx
+import produce from 'immer';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import {
   IoIosAddCircle,
@@ -6,12 +8,13 @@ import {
   IoMdCloseCircle,
 } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-import { Item, Modifier } from '../../../models/IMenu';
+import { Item, Modifier, ModifierItem } from '../../../models/IMenu';
 import { RootState } from '../../../redux/store';
-import { addToCart } from '../../../slices/cart.slice';
+import { addToCart, getCartItems } from '../../../slices/cart.slice';
 import { formatCurrency } from '../../../utils/formatUtil';
 import RadioButton from '../RadioButton/RadioButton';
 import './Modal.css';
+
 interface ModalProps {
   item: Item | null;
   isOpen: boolean;
@@ -19,24 +22,61 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ item, isOpen, toggle }) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const venueState = useSelector((state: RootState) => state.venue);
+  const items = useSelector(getCartItems);
 
   const dispatch = useDispatch();
-  const [selectedModifiers, setSelectedModifiers] = useState<{
-    [key: number]: number;
-  }>({});
+  const [selectedModifiers, setSelectedModifiers] = useState<Modifier[]>([]);
+  useEffect(() => {
+    if (item) {
+      const cartItem = items.find((i) => item && i.id === item.id);
+      if (cartItem) {
+        item = { ...cartItem };
+        setAmount(cartItem.amount);
+        setSelectedModifiers(cartItem.modifiers ?? []);
+      } else {
+        setAmount(1);
 
-  const handleModifierChange = (modifierId: number, value: number) => {
-    setSelectedModifiers({ ...selectedModifiers, [modifierId]: value });
-    console.log(selectedModifiers);
+        setSelectedModifiers([]);
+      }
+    }
+  }, [items, item]);
+
+  const handleModifierChange = (
+    modifier: Modifier,
+    modifierItem: ModifierItem
+  ) => {
+    setSelectedModifiers((prevModifiers) =>
+      produce(prevModifiers, (draft) => {
+        const modifierIndex = draft.findIndex((mod) => mod.id === modifier.id);
+        if (modifierIndex !== -1) {
+          draft[modifierIndex].items = [modifierItem];
+        } else {
+          draft.push({ ...modifier, items: [modifierItem] });
+        }
+      })
+    );
   };
 
-  const addToCartHandler = (item: any) => {
-    if (item) {
-      dispatch(addToCart(item));
-      toggle();
-    }
+  const addToCartHandler = () => {
+    if (!item) return;
+
+    const finalItemPrice =
+      item.price +
+      selectedModifiers.reduce((total, mod) => {
+        return total + (mod.items[0]?.price || 0);
+      }, 0);
+
+    const cartItem = {
+      ...item,
+      price: finalItemPrice,
+      modifiers: selectedModifiers,
+      amount: amount,
+    };
+
+    dispatch(addToCart(cartItem));
+    toggle();
   };
 
   function addItem() {
@@ -44,7 +84,7 @@ const Modal: React.FC<ModalProps> = ({ item, isOpen, toggle }) => {
   }
 
   function removeItem() {
-    if (amount > 0) setAmount(amount - 1);
+    if (amount > 1) setAmount(amount - 1);
   }
 
   const getModifierText = (modifier: Modifier) =>
@@ -81,15 +121,20 @@ const Modal: React.FC<ModalProps> = ({ item, isOpen, toggle }) => {
                       <h5>{modifier.name}</h5>
                       <span>{getModifierText(modifier)}</span>
                     </div>
-                    {modifier.items.map((item) => (
-                      <div className="modifier-item" key={item.id}>
+                    {modifier.items.map((modifierItem, index) => (
+                      <div className="modifier-item" key={modifierItem.id}>
                         <RadioButton
-                          key={item.id}
                           name={`modifier-${modifier.id}`}
-                          item={item}
-                          checked={selectedModifiers[modifier.id] === item.id}
+                          item={modifierItem}
+                          checked={selectedModifiers.some(
+                            (mod) =>
+                              mod.id === modifier.id &&
+                              mod.items.some(
+                                (item) => item.id === modifierItem.id
+                              )
+                          )}
                           onChange={() =>
-                            handleModifierChange(modifier.id, item.id)
+                            handleModifierChange(modifier, modifierItem)
                           }
                         ></RadioButton>
                       </div>
@@ -122,7 +167,14 @@ const Modal: React.FC<ModalProps> = ({ item, isOpen, toggle }) => {
           </div>
           <div className="order">
             <Button className="btn-order" onClick={addToCartHandler}>
-              Add to Order • {formatCurrency(item.price * amount)}
+              Add to Order •{' '}
+              {formatCurrency(
+                (item.price +
+                  selectedModifiers.reduce((total, mod) => {
+                    return total + (mod.items[0]?.price || 0);
+                  }, 0)) *
+                  amount
+              )}
             </Button>
           </div>
         </div>

@@ -22,6 +22,11 @@ const Cart: React.FC<CartProps> = () => {
   const addToCartHandler = (item: Item) => dispatch(addToCart(item));
   const removeFromCartHandler = (item: Item) =>
     dispatch(removeFromCart(item.id));
+  const getItemModifiers = (item: Item): string => {
+    return item.modifiers
+      ? item.modifiers.map((mod) => mod.items[0].name).join(', ')
+      : '';
+  };
 
   return (
     <div className="cart">
@@ -35,7 +40,14 @@ const Cart: React.FC<CartProps> = () => {
               {items.map((item) => (
                 <div>
                   <div className="item">
-                    <span className="item-name">{item.name}</span>
+                    <div className="item-info">
+                      <span className="item-name">{item.name}</span>
+                      {item.modifiers && (
+                        <span className="item-modifiers">
+                          {getItemModifiers(item)}
+                        </span>
+                      )}
+                    </div>
                     <span className="item-price">
                       {formatCurrency(item.price)}
                     </span>
@@ -56,7 +68,7 @@ const Cart: React.FC<CartProps> = () => {
                           venueState.venue?.webSettings.navBackgroundColour,
                         cursor: 'pointer',
                       }}
-                      onClick={() => addToCartHandler(item)}
+                      onClick={() => addToCartHandler(item as Item)}
                     />
                   </div>
                 </div>

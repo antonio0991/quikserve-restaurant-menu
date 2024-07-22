@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IoMenu } from 'react-icons/io5';
+import useScreenSize from '../../../hooks/useScreenSize';
 import { IVenue } from '../../../models/IVenue';
 import './NavBar.css';
-
+import SideBar from './SideBar';
 interface NavBarProps {
   venue: IVenue | null;
 }
 
 const NavBar: React.FC<NavBarProps> = ({ venue }) => {
-  return (
+  const isMobile = useScreenSize();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleSidebarToggle = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  return isMobile ? (
+    <div
+      className="navbar-mobile"
+      style={{
+        backgroundColor: venue?.webSettings.navBackgroundColour,
+      }}
+    >
+      <a className="link-wrapper-mobile">Menu</a>
+      <IoMenu
+        style={{
+          position: 'absolute',
+          right: '10px',
+          width: '28px',
+          height: '28px',
+          color: 'white',
+        }}
+        onClick={handleSidebarToggle}
+      />
+      {sidebarOpen && <SideBar venue={venue} onClose={handleSidebarToggle} />}
+    </div>
+  ) : (
     <nav
       className="navbar"
       style={{

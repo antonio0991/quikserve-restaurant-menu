@@ -22,3 +22,19 @@ a {
 .link-open {
   box-shadow: inset 0 -5px 0 white;
 }
+
+.navbar-mobile {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-wrapper-mobile {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 21.09px;
+  letter-spacing: 0.75px;
+  text-align: center;
+}

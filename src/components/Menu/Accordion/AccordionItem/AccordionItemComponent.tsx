@@ -23,7 +23,7 @@ const AccordionItem: React.FC<AccordionItemProps> = (
     let totalHeight = 0;
     items.forEach((item) => {
       if (item.images) totalHeight += 117;
-      else totalHeight += 75;
+      else totalHeight += 90;
     });
     return totalHeight;
   };
@@ -57,7 +57,11 @@ const AccordionItem: React.FC<AccordionItemProps> = (
       </button>
       <div ref={contentRef} className="answer-container">
         {props.items.map((item) => (
-          <div onClick={() => handleOpenModal(item)} className="item">
+          <div
+            key={item.id}
+            onClick={() => handleOpenModal(item)}
+            className="item"
+          >
             <div className="item-text">
               <p className="item-name">{item.name}</p>
               {item.description ? (

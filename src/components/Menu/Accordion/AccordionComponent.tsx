@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Item, Section } from '../../../models/IMenu';
+import { Section } from '../../../models/IMenu';
 import './AccordionComponent.css';
 import AccordionItem from './AccordionItem/AccordionItemComponent';
 
@@ -25,9 +25,10 @@ const AccordionComponent: React.FC<AccordionComponentProps> = (
   return (
     <div className="container">
       {props.sections.map((section) => (
-        <>
+        <div key={section.id}>
           {section.visible ? (
             <AccordionItem
+              key={section.id}
               items={section.items.filter((item) => item.visible)}
               isOpen={activeIndexes.includes(section.id)}
               onClick={() => handleItemClick(section.id)}
@@ -36,7 +37,7 @@ const AccordionComponent: React.FC<AccordionComponentProps> = (
           ) : (
             <></>
           )}
-        </>
+        </div>
       ))}
     </div>
   );
