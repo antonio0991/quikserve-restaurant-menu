@@ -1,4 +1,3 @@
-// src/features/menu/menuSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { VenueService } from '../api/api';
 import { IMenu } from '../models/IMenu';

@@ -1,4 +1,3 @@
-// src/features/venue/venueSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { VenueService } from '../api/api';
 import { IVenue } from '../models/IVenue';
@@ -23,7 +22,6 @@ export const fetchVenue = createAsyncThunk('venue/fetchVenue', async () => {
 const venueSlice = createSlice({
   name: 'venue',
   initialState,
-  //TODO: Format currency -> Return currency symbol + value
   reducers: {},
   extraReducers: (builder) => {
     builder
